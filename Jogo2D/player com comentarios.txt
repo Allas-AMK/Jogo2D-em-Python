@@ -1,0 +1,54 @@
+import pygame
+
+
+class Player(pygame.sprite.Sprite):
+    def __init__(self, *groups):
+        super().__init__(*groups)
+        
+        self.image = pygame.image.load("data/TestGuy.jpg") #a imagem tem 16x16
+        self.image = pygame.transform.scale(self.image, [100, 100])
+        self.rect = pygame.Rect(50, 50, 100, 100)
+        
+        self.speed = 0
+        self.acceleration = 0.1
+        
+    def update(self, *args):
+        # Lógica!
+        # o pressed pode usar para apertar todas as teclas varias vezes
+        keys = pygame.key.get_pressed()
+        
+        if keys[pygame.K_d]: # esse é o comando para tecla d
+                self.speed += self.acceleration # esse é o metodo com aceleração
+                # self.rect.x += 5  esse é o metodo sem a aceleração
+        if keys[pygame.K_a]: # esse é o comando para tecla a
+                self.speed -= self.acceleration # esse é o metodo com aceleração
+                # self.rect.x -= 5  esse é o metodo sem a aceleração
+        if keys[pygame.K_s]: # esse é o comando para tecla s
+                self.speed += self.acceleration # esse é o metodo com aceleração
+                # self.rect.y += 5  esse é o metodo sem a aceleração
+        if keys[pygame.K_w]: # esse é o comando para tecla w
+                self.speed -= self.acceleration # esse é o metodo com aceleração
+                # self.rect.y -= 5  esse é o metodo sem a aceleração
+        else:
+            self.speed *= 0.95
+            
+        self.rect.y += self.speed
+                
+        if self.rect.top < 0:
+            self.rect.top = 0
+            self.speed = 0
+        elif self.rect.bottom > 480:
+            self.rect.bottom = 480
+            self.speed = 0
+            # print("Segurando W!")
+        # Esse de baixo é comentário apenas pra lembrar se o jogador apertou a tecla
+            # elif event.type == pygame.KEYDOWN:
+                # if event.key == pygame.K_w:
+                    # isPressingW = True
+                    # print("Apertou W!")
+            # elif event.type == pygame.KEYUP:
+                # if event.key == pygame.K_w:
+                    # isPressingW = False
+                    # print("Soltou W!")
+    
+    
